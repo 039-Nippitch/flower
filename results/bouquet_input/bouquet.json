@@ -1,0 +1,870 @@
+{
+ "flowers": [
+  {
+   "n": "Daisy (White)",
+   "c": "#e3e3cb",
+   "q": 65
+  },
+  {
+   "n": "Tulip (Pink)",
+   "c": "#eaa7b2",
+   "q": 12
+  },
+  {
+   "n": "Sunflower (Yellow)",
+   "c": "#e2981c",
+   "q": 10
+  },
+  {
+   "n": "Rose (Yellow)",
+   "c": "#8d8259",
+   "q": 6
+  },
+  {
+   "n": "Daisy (Yellow)",
+   "c": "#c7bd8d",
+   "q": 3
+  },
+  {
+   "n": "Tulip (Yellow)",
+   "c": "#a8a76e",
+   "q": 2
+  },
+  {
+   "n": "Rose (White)",
+   "c": "#c5c6bb",
+   "q": 2
+  },
+  {
+   "n": "Rose (Blue)",
+   "c": "#8e8bae",
+   "q": 1
+  },
+  {
+   "n": "Rose (Orange)",
+   "c": "#fe780c",
+   "q": 1
+  }
+ ],
+ "style": "Soft & Romantic",
+ "container": "tall, narrow vase",
+ "prompt": "A soft & romantic flower arrangement in a tall, narrow vase, made of exactly 65 white daisies, 12 pink tulips, 10 yellow sunflowers, 6 yellow roses, 3 yellow daisies, 2 yellow tulips, 2 white roses, 1 blue rose, 1 orange rose. Photorealistic, soft natural light, plain background.",
+ "items": [
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f6eac5",
+   "size": 0.0085,
+   "cutout": "cutouts/Daisy_Daisy10_01_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e4d5b7",
+   "size": 0.0083,
+   "cutout": "cutouts/Daisy_Daisy10_02_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#a1a49d",
+   "size": 0.0128,
+   "cutout": "cutouts/Daisy_Daisy10_03_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#efe0b9",
+   "size": 0.0301,
+   "cutout": "cutouts/Daisy_Daisy10_04_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f6e8c5",
+   "size": 0.0133,
+   "cutout": "cutouts/Daisy_Daisy10_05_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f7ebc2",
+   "size": 0.0131,
+   "cutout": "cutouts/Daisy_Daisy10_06_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#ddd7c2",
+   "size": 0.0039,
+   "cutout": "cutouts/Daisy_Daisy10_07_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e5d7b7",
+   "size": 0.0056,
+   "cutout": "cutouts/Daisy_Daisy10_08_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f2e3c0",
+   "size": 0.0177,
+   "cutout": "cutouts/Daisy_Daisy10_09_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f1d9af",
+   "size": 0.0075,
+   "cutout": "cutouts/Daisy_Daisy10_10_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#a0a8a9",
+   "size": 0.0107,
+   "cutout": "cutouts/Daisy_Daisy10_11_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f1e3c1",
+   "size": 0.0198,
+   "cutout": "cutouts/Daisy_Daisy10_12_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "yellow",
+   "hex": "#b6ad8b",
+   "size": 0.0056,
+   "cutout": "cutouts/Daisy_Daisy10_13_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e0d1b3",
+   "size": 0.0118,
+   "cutout": "cutouts/Daisy_Daisy10_14_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f3e6c2",
+   "size": 0.0155,
+   "cutout": "cutouts/Daisy_Daisy10_15_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e2d9b3",
+   "size": 0.0053,
+   "cutout": "cutouts/Daisy_Daisy10_16_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f6eac8",
+   "size": 0.0209,
+   "cutout": "cutouts/Daisy_Daisy10_17_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f4e7c2",
+   "size": 0.0328,
+   "cutout": "cutouts/Daisy_Daisy10_18_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f8ebc8",
+   "size": 0.0249,
+   "cutout": "cutouts/Daisy_Daisy10_19_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f3e5c0",
+   "size": 0.0172,
+   "cutout": "cutouts/Daisy_Daisy10_20_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f9eecb",
+   "size": 0.0115,
+   "cutout": "cutouts/Daisy_Daisy10_21_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#8f9289",
+   "size": 0.0123,
+   "cutout": "cutouts/Daisy_Daisy10_22_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#eee3c3",
+   "size": 0.0193,
+   "cutout": "cutouts/Daisy_Daisy10_23_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f3e7c3",
+   "size": 0.0063,
+   "cutout": "cutouts/Daisy_Daisy10_24_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "yellow",
+   "hex": "#cbbd9d",
+   "size": 0.0035,
+   "cutout": "cutouts/Daisy_Daisy10_25_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#ebdebb",
+   "size": 0.005,
+   "cutout": "cutouts/Daisy_Daisy10_26_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f0e2bc",
+   "size": 0.0093,
+   "cutout": "cutouts/Daisy_Daisy10_27_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#ebdebe",
+   "size": 0.0074,
+   "cutout": "cutouts/Daisy_Daisy10_28_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f9ebc2",
+   "size": 0.0264,
+   "cutout": "cutouts/Daisy_Daisy10_29_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#ede1b8",
+   "size": 0.0066,
+   "cutout": "cutouts/Daisy_Daisy10_30_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#abaca1",
+   "size": 0.0101,
+   "cutout": "cutouts/Daisy_Daisy10_31_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#f4e4bb",
+   "size": 0.0351,
+   "cutout": "cutouts/Daisy_Daisy10_32_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e3e9e5",
+   "size": 0.0031,
+   "cutout": "cutouts/Daisy_Daisy11_01_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#a6b1af",
+   "size": 0.0023,
+   "cutout": "cutouts/Daisy_Daisy11_02_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e0e4e0",
+   "size": 0.0098,
+   "cutout": "cutouts/Daisy_Daisy11_03_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e3e8e3",
+   "size": 0.0068,
+   "cutout": "cutouts/Daisy_Daisy11_04_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#ccd2c8",
+   "size": 0.0031,
+   "cutout": "cutouts/Daisy_Daisy11_05_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#d4d9d5",
+   "size": 0.0043,
+   "cutout": "cutouts/Daisy_Daisy11_06_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#d6dad5",
+   "size": 0.0075,
+   "cutout": "cutouts/Daisy_Daisy11_07_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#d8dccf",
+   "size": 0.0041,
+   "cutout": "cutouts/Daisy_Daisy11_08_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dde3e0",
+   "size": 0.0063,
+   "cutout": "cutouts/Daisy_Daisy11_09_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "rose",
+   "color": "blue",
+   "hex": "#8e8bae",
+   "size": 0.0029,
+   "cutout": "cutouts/Daisy_Daisy11_10_rose.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "rose",
+   "color": "yellow",
+   "hex": "#8a805c",
+   "size": 0.0012,
+   "cutout": "cutouts/Daisy_Daisy11_11_rose.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e3e7e1",
+   "size": 0.0113,
+   "cutout": "cutouts/Daisy_Daisy11_12_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e3e8e4",
+   "size": 0.0048,
+   "cutout": "cutouts/Daisy_Daisy11_13_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "tulip",
+   "color": "yellow",
+   "hex": "#989150",
+   "size": 0.0023,
+   "cutout": "cutouts/Daisy_Daisy11_14_tulip.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#d5dad0",
+   "size": 0.0022,
+   "cutout": "cutouts/Daisy_Daisy11_15_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dce2de",
+   "size": 0.0064,
+   "cutout": "cutouts/Daisy_Daisy11_16_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e0e4e1",
+   "size": 0.0106,
+   "cutout": "cutouts/Daisy_Daisy11_17_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dbe0dc",
+   "size": 0.009,
+   "cutout": "cutouts/Daisy_Daisy11_18_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e6ebe9",
+   "size": 0.0058,
+   "cutout": "cutouts/Daisy_Daisy11_19_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#eaefed",
+   "size": 0.0064,
+   "cutout": "cutouts/Daisy_Daisy11_20_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e1e6e3",
+   "size": 0.0047,
+   "cutout": "cutouts/Daisy_Daisy11_21_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e6ebe6",
+   "size": 0.0033,
+   "cutout": "cutouts/Daisy_Daisy11_22_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e6ebe9",
+   "size": 0.0094,
+   "cutout": "cutouts/Daisy_Daisy11_23_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#d4d7cb",
+   "size": 0.0039,
+   "cutout": "cutouts/Daisy_Daisy11_24_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dcdedd",
+   "size": 0.0063,
+   "cutout": "cutouts/Daisy_Daisy11_25_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#d0d3cc",
+   "size": 0.0079,
+   "cutout": "cutouts/Daisy_Daisy11_26_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e0e4e0",
+   "size": 0.0046,
+   "cutout": "cutouts/Daisy_Daisy11_27_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dee2db",
+   "size": 0.0098,
+   "cutout": "cutouts/Daisy_Daisy11_28_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "rose",
+   "color": "white",
+   "hex": "#a9ac9d",
+   "size": 0.0028,
+   "cutout": "cutouts/Daisy_Daisy11_29_rose.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e1e8e7",
+   "size": 0.0041,
+   "cutout": "cutouts/Daisy_Daisy11_30_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dfe3dd",
+   "size": 0.0095,
+   "cutout": "cutouts/Daisy_Daisy11_31_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e5e9e7",
+   "size": 0.0089,
+   "cutout": "cutouts/Daisy_Daisy11_32_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e5e9e7",
+   "size": 0.0091,
+   "cutout": "cutouts/Daisy_Daisy11_33_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e1e4dc",
+   "size": 0.009,
+   "cutout": "cutouts/Daisy_Daisy11_34_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dee5e1",
+   "size": 0.0044,
+   "cutout": "cutouts/Daisy_Daisy11_35_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#e7ebe7",
+   "size": 0.0061,
+   "cutout": "cutouts/Daisy_Daisy11_36_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#dee2dd",
+   "size": 0.0056,
+   "cutout": "cutouts/Daisy_Daisy11_37_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "tulip",
+   "color": "yellow",
+   "hex": "#b8bd8c",
+   "size": 0.0009,
+   "cutout": "cutouts/Daisy_Daisy11_38_tulip.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#c2c7c0",
+   "size": 0.0054,
+   "cutout": "cutouts/Daisy_Daisy11_39_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#d2d7d0",
+   "size": 0.0043,
+   "cutout": "cutouts/Daisy_Daisy11_40_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy11.jpg",
+   "species": "daisy",
+   "color": "yellow",
+   "hex": "#c7c08d",
+   "size": 0.0014,
+   "cutout": "cutouts/Daisy_Daisy11_41_daisy.png"
+  },
+  {
+   "image": "Rose_Rose1.jpg",
+   "species": "rose",
+   "color": "white",
+   "hex": "#e2e0da",
+   "size": 0.6003,
+   "cutout": "cutouts/Rose_Rose1_01_rose.png"
+  },
+  {
+   "image": "Rose_Rose10.jpg",
+   "species": "rose",
+   "color": "yellow",
+   "hex": "#bfac78",
+   "size": 0.2867,
+   "cutout": "cutouts/Rose_Rose10_01_rose.png"
+  },
+  {
+   "image": "Rose_Rose10.jpg",
+   "species": "rose",
+   "color": "yellow",
+   "hex": "#908456",
+   "size": 0.113,
+   "cutout": "cutouts/Rose_Rose10_02_rose.png"
+  },
+  {
+   "image": "Rose_Rose10.jpg",
+   "species": "rose",
+   "color": "yellow",
+   "hex": "#615b33",
+   "size": 0.0761,
+   "cutout": "cutouts/Rose_Rose10_03_rose.png"
+  },
+  {
+   "image": "Rose_Rose10.jpg",
+   "species": "rose",
+   "color": "yellow",
+   "hex": "#664c0e",
+   "size": 0.0287,
+   "cutout": "cutouts/Rose_Rose10_04_rose.png"
+  },
+  {
+   "image": "Rose_Rose10.jpg",
+   "species": "rose",
+   "color": "yellow",
+   "hex": "#d3c18a",
+   "size": 0.3702,
+   "cutout": "cutouts/Rose_Rose10_05_rose.png"
+  },
+  {
+   "image": "Rose_Rose11.jpg",
+   "species": "rose",
+   "color": "orange",
+   "hex": "#fe780c",
+   "size": 0.814,
+   "cutout": "cutouts/Rose_Rose11_01_rose.png"
+  },
+  {
+   "image": "Sunflower_Sunflower1.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#f3c303",
+   "size": 0.4345,
+   "cutout": "cutouts/Sunflower_Sunflower1_01_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower10.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#e9c31e",
+   "size": 0.059,
+   "cutout": "cutouts/Sunflower_Sunflower10_01_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower10.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#fbce13",
+   "size": 0.4075,
+   "cutout": "cutouts/Sunflower_Sunflower10_02_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower11.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#c38b1a",
+   "size": 0.0675,
+   "cutout": "cutouts/Sunflower_Sunflower11_01_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower11.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#e0931c",
+   "size": 0.0992,
+   "cutout": "cutouts/Sunflower_Sunflower11_02_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower11.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#e49e21",
+   "size": 0.2111,
+   "cutout": "cutouts/Sunflower_Sunflower11_03_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower11.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#de911c",
+   "size": 0.0657,
+   "cutout": "cutouts/Sunflower_Sunflower11_04_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower11.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#e79d21",
+   "size": 0.067,
+   "cutout": "cutouts/Sunflower_Sunflower11_05_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower11.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#cc8516",
+   "size": 0.2532,
+   "cutout": "cutouts/Sunflower_Sunflower11_06_sunflower.png"
+  },
+  {
+   "image": "Sunflower_Sunflower11.jpg",
+   "species": "sunflower",
+   "color": "yellow",
+   "hex": "#dd941d",
+   "size": 0.0969,
+   "cutout": "cutouts/Sunflower_Sunflower11_07_sunflower.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#cd9da7",
+   "size": 0.013,
+   "cutout": "cutouts/Tulip_Tulip1_01_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#eab2ba",
+   "size": 0.0185,
+   "cutout": "cutouts/Tulip_Tulip1_02_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#eab2bb",
+   "size": 0.0192,
+   "cutout": "cutouts/Tulip_Tulip1_03_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#edadb7",
+   "size": 0.0198,
+   "cutout": "cutouts/Tulip_Tulip1_04_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#e6aab5",
+   "size": 0.0176,
+   "cutout": "cutouts/Tulip_Tulip1_05_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#eaa4b0",
+   "size": 0.0211,
+   "cutout": "cutouts/Tulip_Tulip1_06_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#e7b1b7",
+   "size": 0.0195,
+   "cutout": "cutouts/Tulip_Tulip1_07_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip1.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#edb2bb",
+   "size": 0.0209,
+   "cutout": "cutouts/Tulip_Tulip1_08_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip2.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#ec7c83",
+   "size": 0.1009,
+   "cutout": "cutouts/Tulip_Tulip2_01_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip2.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#ee898f",
+   "size": 0.0615,
+   "cutout": "cutouts/Tulip_Tulip2_02_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip2.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#d16d76",
+   "size": 0.0652,
+   "cutout": "cutouts/Tulip_Tulip2_03_tulip.png"
+  },
+  {
+   "image": "Tulip_Tulip2.jpg",
+   "species": "tulip",
+   "color": "pink",
+   "hex": "#f18c93",
+   "size": 0.0606,
+   "cutout": "cutouts/Tulip_Tulip2_04_tulip.png"
+  }
+ ]
+}

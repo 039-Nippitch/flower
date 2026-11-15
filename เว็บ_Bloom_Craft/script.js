@@ -6,6 +6,7 @@ const STYLES=[
  {n:'Soft & Romantic',d:'Airy, flowing, with a gentle garden feel.',c:'#e48a9e',name:'Garden Whisper',txt:'A soft, romantic arrangement designed around your blooms.'},
  {n:'Wild Garden',d:'Organic, free-flowing, and beautifully uneven.',c:'#c9a35a',name:'Meadow Tangle',txt:'A loose, natural gathering that looks freshly picked.'},
  {n:'Modern Minimal',d:'Sculptural lines with intentional negative space.',c:'#7a9a7e',name:'Quiet Line',txt:'A clean, sculptural design that lets each bloom stand out.'}];
+const CONT_TXT=['hand-tied bouquet','tall, narrow vase','short, wide vase','small, round mug'];   // = CONTAINERS in the notebook
 const CONTS=[{n:'Bouquet',d:'Hand-tied, no vessel'},{n:'Vase',d:'Tall, narrow shape'},{n:'Vase',d:'Short, wide shape'},{n:'Mug',d:'Small, round shape'}];
 
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200)}
@@ -43,7 +44,7 @@ function useAI(d){
   const fl=(d.flowers||[]).filter(x=>x&&typeof x.n==='string'&&/^#[0-9a-f]{6}$/i.test(x.c)&&x.q>=1)
     .map(x=>({n:x.n.replace(/[<>&"]/g,''),c:x.c,q:Math.round(x.q)}));
   if(!fl.length)return false;
-  state.flowers=fl;const si=STYLES.findIndex(s=>s.n===d.style);if(si>=0)state.style=si;
+  state.flowers=fl;state.ref=null;const si=STYLES.findIndex(s=>s.n===d.style);if(si>=0)state.style=si;
   const ci=['bouquet','narrow vase','wide vase','mug'].findIndex(k=>String(d.container||'').includes(k));if(ci>=0)state.container=ci;
   return true}
 function showAIPhoto(d){const p=$('#found .photo'),chip=$('.chip',p);
@@ -57,7 +58,7 @@ async function analyzeAI(){
     if(!r.ok)return toast(d.error==='too_big'?'Photo is over 12MB — choose a smaller one':'Could not read this photo');
     if(!d.is_flower)return toast(d.reason==='drawn'?'This looks like a drawing — please use a real flower photo':'No flowers found — try another photo');
     if(!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(d.photo||'')||!useAI(d))return toast('No flowers found — try another photo');
-    showAIPhoto(d);go('found')}
+    state.ref=typeof d.ref==='string'?d.ref:null;showAIPhoto(d);go('found')}
   catch{toast('AI server is not reachable — is the notebook still running?')}
   finally{$('#loading').hidden=true}}
 function sampleSVG(){const s=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><rect width='600' height='600' fill='#cfd8d3'/><g stroke='#6f8f72' stroke-width='6'><path d='M300 600V330M250 600L270 330M350 600L330 330'/></g><g><circle cx='300' cy='290' r='55' fill='#e48a9e'/><circle cx='235' cy='320' r='48' fill='#f3c9cf'/><circle cx='365' cy='320' r='48' fill='#d56b86'/><circle cx='300' cy='235' r='44' fill='#f7e2e3'/><circle cx='260' cy='255' r='38' fill='#fff'/></g></svg>`;return 'data:image/svg+xml;utf8,'+encodeURIComponent(s)}
@@ -114,9 +115,22 @@ function renderReview(){
   const s=state.flowers.reduce((a,f)=>a+f.q,0);
   $('#rvFlowers').textContent=`${s} stems · ${state.flowers.length} varieties`;
   $('#rvStyle').textContent=STYLES[state.style].n;$('#rvCont').textContent=CONTS[state.container].n}
-$('#generate').onclick=()=>load('Arranging your blooms…',2200,()=>{
-  const s=STYLES[state.style];$('#resName').textContent=s.name;$('#resDesc').textContent=s.txt;go('result')});
-$('#save').onclick=()=>toast('Image saved to your device');
+function showResult(img){const s=STYLES[state.style];$('#resName').textContent=s.name;$('#resDesc').textContent=s.txt;
+  const p=$('#result .photo');state.render=img||null;
+  p.style.background=img?`#eee url("${img}") center/cover no-repeat`:'';go('result')}
+$('#generate').onclick=async()=>{
+  if(!location.protocol.startsWith('http'))return load('Arranging your blooms…',2200,()=>showResult(null));
+  $('#loading p').textContent='Arranging your blooms… (about 30–60 s)';$('#loading').hidden=false;
+  try{const r=await fetch('api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      flowers:state.flowers,style:STYLES[state.style].n,container:CONT_TXT[state.container],ref:state.ref||null})});
+    const d=await r.json();
+    if(r.status===503){toast('Image generator is not loaded — showing a preview');return showResult(null)}
+    if(!r.ok||!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(d.image||''))return toast('Could not create the image — try again');
+    showResult(d.image)}
+  catch{toast('AI server is not reachable — is the notebook still running?')}
+  finally{$('#loading').hidden=true}};
+$('#save').onclick=()=>{if(!state.render)return toast('Image saved to your device');
+  const a=document.createElement('a');a.href=state.render;a.download='bloom-craft-arrangement.jpg';a.click()};
 $('#share').onclick=async()=>{try{await navigator.share({title:'My Bloom Craft arrangement',url:location.href})}catch{toast('Link copied')}};
 
 go('home',true);

@@ -23,26 +23,43 @@ function go(id,back){
 }
 $$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 $('#back').onclick=()=>{ if(state.history.length>1){state.history.pop();go(state.history[state.history.length-1],true)} };
-$('#restart').onclick=()=>{state.history=['home'];state.photo=null;$('#preview').hidden=true;$('#dropEmpty').hidden=false;go('home',true)};
+$('#restart').onclick=()=>{state.history=['home'];state.photo=null;state.file=null;showAIPhoto(null);$('#preview').hidden=true;$('#dropEmpty').hidden=false;go('home',true)};
 
 /* upload: after choosing or taking a photo, go straight to crop */
 function setPhoto(url){state.photo=url;const p=$('#preview');p.src=url;p.hidden=false;$('#dropEmpty').hidden=true;go('crop')}
 function onPick(e){const f=e.target.files[0];e.target.value='';if(!f)return;
-  if(f.size>12*1048576)return toast('Photo is over 12MB — choose a smaller one');setPhoto(URL.createObjectURL(f))}
+  if(f.size>12*1048576)return toast('Photo is over 12MB — choose a smaller one');state.file=f;setPhoto(URL.createObjectURL(f))}
 $('#file').onchange=onPick;$('#cam').onchange=onPick;
 $('#takePhoto').onclick=()=>$('#cam').click();
-$('#sample').onclick=()=>{state.photo=sampleSVG();go('found')};
+$('#sample').onclick=()=>{state.photo=sampleSVG();showAIPhoto(null);go('found')};
 /* load results/bouquet_input/bouquet.json made by flower_counter_demo_4ชนิด.ipynb */
 $('#loadAI').onclick=()=>$('#aiFile').click();
 $('#aiFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
-  try{const d=JSON.parse(await f.text());
-    const fl=(d.flowers||[]).filter(x=>x&&typeof x.n==='string'&&/^#[0-9a-f]{6}$/i.test(x.c)&&x.q>=1)
-      .map(x=>({n:x.n.replace(/[<>&"]/g,''),c:x.c,q:Math.round(x.q)}));
-    if(!fl.length)return toast('No flowers in this file');
-    state.flowers=fl;const si=STYLES.findIndex(s=>s.n===d.style);if(si>=0)state.style=si;
-    const ci=['bouquet','narrow vase','wide vase','mug'].findIndex(k=>String(d.container||'').includes(k));if(ci>=0)state.container=ci;
-    state.photo=sampleSVG();go('found');toast(`Loaded ${fl.length} flower types from AI`)}
+  try{const d=JSON.parse(await f.text());if(!useAI(d))return toast('No flowers in this file');
+    state.photo=sampleSVG();showAIPhoto(null);go('found');toast(`Loaded ${state.flowers.length} flower types from AI`)}
   catch{toast('Could not read this file')}};
+/* AI result (bouquet.json or /api/analyze) → inventory, style, container */
+function useAI(d){
+  const fl=(d.flowers||[]).filter(x=>x&&typeof x.n==='string'&&/^#[0-9a-f]{6}$/i.test(x.c)&&x.q>=1)
+    .map(x=>({n:x.n.replace(/[<>&"]/g,''),c:x.c,q:Math.round(x.q)}));
+  if(!fl.length)return false;
+  state.flowers=fl;const si=STYLES.findIndex(s=>s.n===d.style);if(si>=0)state.style=si;
+  const ci=['bouquet','narrow vase','wide vase','mug'].findIndex(k=>String(d.container||'').includes(k));if(ci>=0)state.container=ci;
+  return true}
+function showAIPhoto(d){const p=$('#found .photo'),chip=$('.chip',p);
+  p.style.background=d?`#eee url("${d.photo}") center/contain no-repeat`:'';
+  chip.textContent=d?`✓ AI found ${d.n} flower${d.n===1?'':'s'}`:'✓ 98% confident'}
+/* when this page is served by the notebook (cell 10), send the photo to the real model */
+async function analyzeAI(){
+  $('#loading p').textContent='Identifying your flowers…';$('#loading').hidden=false;
+  try{const fd=new FormData();fd.append('image',state.file);
+    const r=await fetch('api/analyze',{method:'POST',body:fd});const d=await r.json();
+    if(!r.ok)return toast(d.error==='too_big'?'Photo is over 12MB — choose a smaller one':'Could not read this photo');
+    if(!d.is_flower)return toast(d.reason==='drawn'?'This looks like a drawing — please use a real flower photo':'No flowers found — try another photo');
+    if(!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(d.photo||'')||!useAI(d))return toast('No flowers found — try another photo');
+    showAIPhoto(d);go('found')}
+  catch{toast('AI server is not reachable — is the notebook still running?')}
+  finally{$('#loading').hidden=true}}
 function sampleSVG(){const s=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><rect width='600' height='600' fill='#cfd8d3'/><g stroke='#6f8f72' stroke-width='6'><path d='M300 600V330M250 600L270 330M350 600L330 330'/></g><g><circle cx='300' cy='290' r='55' fill='#e48a9e'/><circle cx='235' cy='320' r='48' fill='#f3c9cf'/><circle cx='365' cy='320' r='48' fill='#d56b86'/><circle cx='300' cy='235' r='44' fill='#f7e2e3'/><circle cx='260' cy='255' r='38' fill='#fff'/></g></svg>`;return 'data:image/svg+xml;utf8,'+encodeURIComponent(s)}
 function photoCSS(){return state.photo?`url("${state.photo}")`:'none'}
 
@@ -54,7 +71,8 @@ function photoCSS(){return state.photo?`url("${state.photo}")`:'none'}
  box.onpointermove=e=>{if(!drag)return;x=e.clientX-drag.x;y=e.clientY-drag.y;apply()};
  box.onpointerup=()=>{drag=null;box.style.cursor='grab'};
 })();
-$('#analyze').onclick=()=>{load('Identifying your flowers…',1400,()=>go('found'))};
+$('#analyze').onclick=()=>{if(state.file&&location.protocol.startsWith('http'))return analyzeAI();
+  load('Identifying your flowers…',1400,()=>go('found'))};
 function load(msg,ms,done){$('#loading p').textContent=msg;$('#loading').hidden=false;setTimeout(()=>{$('#loading').hidden=true;done()},ms)}
 
 /* flower inventory */

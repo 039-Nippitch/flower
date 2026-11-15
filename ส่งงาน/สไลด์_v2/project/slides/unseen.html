@@ -1,0 +1,27 @@
+<section id="unseen" class="alt">
+<div class="head">
+<p class="eyebrow">WHY v2 · ดอกชนิดที่ไม่เคยเห็น</p>
+<h2>v2 ปัดดอกที่ไม่รู้จักเป็น unknown ได้ 99%</h2>
+</div>
+<div class="cols-wide">
+<div class="chart">
+<h3>ดอก 15 ชนิดที่ไม่เคยเห็น (120 รูป) → ตอบ other ถูก</h3>
+<div class="row" style="grid-template-columns:360px 1fr 130px"><p class="lbl">head v1 <span class="sub">other = แดนดิไลออน</span></p><div class="track"><div class="bar" style="width:7.5%;--i:0;background:#C77E98"></div></div><p class="val"><b>7.5%</b></p></div>
+<div class="row" style="grid-template-columns:360px 1fr 130px"><p class="lbl">YOLO11n-cls v2 <span class="sub"></span></p><div class="track"><div class="bar" style="width:90.8%;--i:1"></div></div><p class="val"><b>90.8%</b></p></div>
+<div class="row" style="grid-template-columns:360px 1fr 130px"><p class="lbl">BioCLIP 2 <span class="sub">zero-shot</span></p><div class="track"><div class="bar" style="width:98.3%;--i:2"></div></div><p class="val"><b>98.3%</b></p></div>
+<div class="row best" style="grid-template-columns:360px 1fr 130px"><p class="lbl">head v2 <span class="sub">✓ ใช้ในเดโม</span></p><div class="track"><div class="bar win" style="width:99.2%;--i:3"></div></div><p class="val"><b>99.2%</b></p></div>
+</div>
+<div class="stack">
+<p class="pill">head v1 → v2 บน Test v2</p>
+<table class="t">
+<tr><th style="width:46%">วัดผล</th><th style="width:27%;text-align:right">v1</th><th style="width:27%;text-align:right">v2</th></tr>
+<tr><td>Accuracy รวม</td><td style="text-align:right">82.6%</td><td style="text-align:right"><b>97.3%</b></td></tr>
+<tr><td>ดอกไม่รู้จัก → other</td><td style="text-align:right">7.5%</td><td style="text-align:right"><b>99.2%</b></td></tr>
+<tr><td>เฉพาะ 4 ชนิด</td><td style="text-align:right"><b>98.6%</b></td><td style="text-align:right">96.2%</td></tr>
+</table>
+<p class="small">แลกความแม่น 4 ชนิดลง 2.4% เพื่อไม่ทายดอกชนิดอื่นในช่อผสมเป็น 1 ใน 4</p>
+</div>
+</div>
+<div class="foot"><span>Bloom Craft · INT182 Group 1</span><span class="pg"></span></div>
+<aside>ปัญหาของ v1 คือคลาส other เคยเห็นแค่แดนดิไลออน ดอกชนิดอื่นจึงถูกทายเป็นกุหลาบหรือทิวลิป v2 เพิ่มดอก 69 ชนิดเข้าไป ชนิดที่ไม่เคยเห็นเลยถูกปัดเป็น other 99.2% ราคาที่จ่ายคือดอก 4 ชนิดจริงบางดอกกลายเป็น unknown</aside>
+</section>

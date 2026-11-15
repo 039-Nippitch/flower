@@ -1,0 +1,35 @@
+<section id="data" class="alt">
+<div class="head">
+<p class="eyebrow">DATASETS &amp; CLASS LABELS · v2</p>
+<h2>ข้อมูลที่ใช้ Train / Validation / Test</h2>
+</div>
+<div class="cols-wide">
+<div class="stack">
+<p class="pill">ตัวบอกชนิด · TF Flowers 3,670 + Oxford 102 792 รูป</p>
+<table class="t">
+<tr><th style="width:28%">คลาส</th><th style="width:18%;text-align:right">Train</th><th style="width:18%;text-align:right">Val</th><th style="width:18%;text-align:right">Test</th><th style="width:18%;text-align:right">รวม</th></tr>
+<tr><td>daisy</td><td style="text-align:right">443</td><td style="text-align:right">95</td><td style="text-align:right">95</td><td style="text-align:right">633</td></tr>
+<tr><td>rose</td><td style="text-align:right">448</td><td style="text-align:right">96</td><td style="text-align:right">97</td><td style="text-align:right">641</td></tr>
+<tr><td>sunflower</td><td style="text-align:right">489</td><td style="text-align:right">105</td><td style="text-align:right">105</td><td style="text-align:right">699</td></tr>
+<tr><td>tulip</td><td style="text-align:right">559</td><td style="text-align:right">120</td><td style="text-align:right">120</td><td style="text-align:right">799</td></tr>
+<tr><td>other: แดนดิไลออน</td><td style="text-align:right">628</td><td style="text-align:right">135</td><td style="text-align:right">135</td><td style="text-align:right">898</td></tr>
+<tr><td>other: Oxford 102</td><td style="text-align:right">552 <span class="sub">(69 ชนิด)</span></td><td style="text-align:right">120 <span class="sub">(15)</span></td><td style="text-align:right">120 <span class="sub">(15)</span></td><td style="text-align:right">792</td></tr>
+<tr><td>รวม</td><td style="text-align:right">3,119</td><td style="text-align:right">671</td><td style="text-align:right">672</td><td style="text-align:right">4,462</td></tr>
+</table>
+<p class="small">TF Flowers แบ่ง 70/15/15 · Oxford แบ่ง “ตามชนิด” ชนิดใน Test ไม่เคยเห็นตอนเทรน · ตัดเดซี่ ทานตะวัน กุหลาบของ Oxford ออก (ซ้ำกับ 4 คลาส)</p>
+</div>
+<div class="stack">
+<p class="pill leaf">ตัวหาดอก · 1 คลาส: flower</p>
+<table class="t">
+<tr><th style="width:52%">ชุดข้อมูล</th><th style="width:48%">ใช้ทำ</th></tr>
+<tr><td>Roboflow Bouquet-8 (1,219 / 99)</td><td>Train / Val ของ YOLO</td></tr>
+<tr><td>Roboflow flower-count (296)</td><td>Train เพิ่มของ YOLO</td></tr>
+<tr><td>รูปทดสอบ 23 รูป + เฉลยจำนวน</td><td>วัดและจูนตัวหาดอก</td></tr>
+<tr><td>รูปเดโม 10 รูป</td><td>สาธิต 4 ชนิด</td></tr>
+</table>
+<p class="small">รวมทั้งหมดราว 6,100 รูป · SAM 3 และ BioCLIP 2 เป็นโมเดลสำเร็จรูป เราเทรน YOLO และส่วนหัวบอกชนิด</p>
+</div>
+</div>
+<div class="foot"><span>Bloom Craft · INT182 Group 1</span><span class="pg"></span></div>
+<aside>v2 เพิ่มรูปดอกไม้ 99 ชนิดจาก Oxford 102 เข้าคลาส other ชนิดละ 8 รูป และแบ่งตามชนิด ทำให้ Test มีดอก 15 ชนิดที่โมเดลไม่เคยเห็นเลย ใช้วัดได้จริงว่าระบบปัดดอกที่ไม่รู้จักเป็น unknown ได้ไหม</aside>
+</section>

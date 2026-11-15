@@ -1,0 +1,18 @@
+<section id="pipeline" class="alt">
+<div class="head">
+<p class="eyebrow">AI PIPELINE</p>
+<h2>ภาพรวมการทำงาน</h2>
+</div>
+<div class="flow">
+<div class="step" style="--i:0"><p class="n">1</p><h3>กรองรูป</h3><p class="model">CLIP ViT-B/32</p><p class="what">ดอกไม้จริงไหม การ์ตูนหรือเกมไหม</p></div>
+<div class="step key" style="--i:1"><p class="n">2</p><h3>หาดอก</h3><p class="model">SAM 3</p><p class="what">กรอบ + รูปทรงดอก ได้จำนวนดอก</p></div>
+<div class="step" style="--i:2"><p class="n">3</p><h3>ครอป</h3><p class="model">–</p><p class="what">ตัดรูปทีละดอก</p></div>
+<div class="step" style="--i:3"><p class="n">4</p><h3>กรองครอป</h3><p class="model">CLIP ViT-B/32</p><p class="what">ตัดใบไม้ แจกัน ที่หาเจอผิด</p></div>
+<div class="step key" style="--i:4"><p class="n">5</p><h3>บอกชนิด</h3><p class="model">BioCLIP 2 + head ที่เราเทรน</p><p class="what">4 ชนิด หรือ unknown</p></div>
+<div class="step" style="--i:5"><p class="n">6</p><h3>บอกสี</h3><p class="model">คำนวณจากพิกเซล</p><p class="what">ใช้เฉพาะพิกเซลในรูปทรงดอก</p></div>
+<div class="step" style="--i:6"><p class="n">7</p><h3>ส่งออก</h3><p class="model">bouquet.json</p><p class="what">รายการดอก + prompt + รูปตัดพื้นหลัง</p></div>
+</div>
+<div class="next"><p class="tag">ขั้นถัดไป</p><p>นำ bouquet.json + รูปดอกตัดพื้นหลัง ไปเจนรูปช่อดอกไม้ในแอป Bloom Craft</p></div>
+<div class="foot"><span>Bloom Craft · INT182 Group 1</span><span class="pg"></span></div>
+<aside>เล่าทีละขั้น ขั้นที่ใส่กรอบสีชมพูคือ 2 จุดที่เราเลือกและวัดผลเปรียบเทียบ: ขั้นหาดอก (SAM 3) และขั้นบอกชนิด (BioCLIP 2 + ส่วนหัวที่เราเทรนเอง) สองสไลด์ถัดไปคือเหตุผลที่เลือก</aside>
+</section>

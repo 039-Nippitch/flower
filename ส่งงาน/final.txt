@@ -1,0 +1,18 @@
+Project -- INT182-Group1-- Upload Project - Phase3 --Final [Team]
+Due November 17, 2026 11:59 PM
+•
+Multiple submissions allowed
+•
+Closes November 28, 2026 11:59 PM
+Instructions
+[Project due date -- before midnight of November 17, 2026]
+
+แต่ละทีมต้อง upload สไลด์ PPT (ในแบบ .pdf) เพื่อ เป็นการสรุป 1)  AI/DS over all pipeline 2) Summary of system features (in case of AI project) 3) Data sets used (Train/Test/Validation set), and all class labels 4) a confusion matrix of the best model performance   and/or a ROC curve, which shows comparison of all models created  5) In case of DS project on Kaggle, capture your team's best score and ranking from Kaggle's  real-time score board  6) summary of major system test cases (for AI project).
+
+การนำเสนอจริงในห้องเรียนจะใช้เวลาทั้งหมดทีมละ 8 นาที (สรุปด้วย PPT และการสาธิตระบบจริง) โปรดแบ่งเวลาส่วนใหญ่ไปกับการสาธิตจริงให้มาก  PPTสไลด์จะถูกใช้สำหรับการสรุปสั้นๆเท่านั้น  โปรดเตรียมข้อมูลทดสอบที่ดีที่สุดของคุณมาให้พร้อม (เช่น รูปภาพ ไฟล์ วิดีโอ ฯลฯ) อาจารย์พรชัยและอาจารย์ชาคริดา อาจใช้ข้อมูลทดสอบเพิ่มเติมจากชุดข้อมูลของเราเอง
+
+*Note -- The last slide should contain the Reference section, in which, team must include github drive of your works, in case the instructors may want to check your project works some more in details.
+
+**Note -- Each team must freeze your slide file after submission on Nov 17, 2026 deadline.
+
+​*** Note --Order of presentation in class (Chosen at random) will be announced before 18:00 of Tues. Nov 17, 2026.

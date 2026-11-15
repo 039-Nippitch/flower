@@ -12,8 +12,8 @@
   },
   {
    "n": "Sunflower (Yellow)",
-   "c": "#e2981c",
-   "q": 10
+   "c": "#e0941c",
+   "q": 9
   },
   {
    "n": "Rose (Yellow)",
@@ -26,9 +26,9 @@
    "q": 3
   },
   {
-   "n": "Tulip (Yellow)",
-   "c": "#a8a76e",
-   "q": 2
+   "n": "Flower (Yellow)",
+   "c": "#b8bd50",
+   "q": 3
   },
   {
    "n": "Rose (White)",
@@ -36,7 +36,7 @@
    "q": 2
   },
   {
-   "n": "Rose (Blue)",
+   "n": "Flower (Blue)",
    "c": "#8e8bae",
    "q": 1
   },
@@ -48,7 +48,7 @@
  ],
  "style": "Soft & Romantic",
  "container": "tall, narrow vase",
- "prompt": "A soft & romantic flower arrangement in a tall, narrow vase, made of exactly 65 white daisies, 12 pink tulips, 10 yellow sunflowers, 6 yellow roses, 3 yellow daisies, 2 yellow tulips, 2 white roses, 1 blue rose, 1 orange rose. Photorealistic, soft natural light, plain background.",
+ "prompt": "A soft & romantic flower arrangement in a tall, narrow vase, made of exactly 65 white daisies, 12 pink tulips, 9 yellow sunflowers, 6 yellow roses, 3 yellow daisies, 3 yellow flowers, 2 white roses, 1 blue flower, 1 orange rose. Photorealistic, soft natural light, plain background.",
  "items": [
   {
    "image": "Daisy_Daisy10.jpg",
@@ -87,7 +87,7 @@
    "species": "daisy",
    "color": "white",
    "hex": "#f6e8c5",
-   "size": 0.0133,
+   "size": 0.0134,
    "cutout": "cutouts/Daisy_Daisy10_05_daisy.png"
   },
   {
@@ -103,8 +103,16 @@
    "species": "daisy",
    "color": "white",
    "hex": "#ddd7c2",
-   "size": 0.0039,
+   "size": 0.0038,
    "cutout": "cutouts/Daisy_Daisy10_07_daisy.png"
+  },
+  {
+   "image": "Daisy_Daisy10.jpg",
+   "species": "daisy",
+   "color": "white",
+   "hex": "#8f9289",
+   "size": 0.0126,
+   "cutout": "cutouts/Daisy_Daisy10_08_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -112,7 +120,7 @@
    "color": "white",
    "hex": "#e5d7b7",
    "size": 0.0056,
-   "cutout": "cutouts/Daisy_Daisy10_08_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_09_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -120,7 +128,7 @@
    "color": "white",
    "hex": "#f2e3c0",
    "size": 0.0177,
-   "cutout": "cutouts/Daisy_Daisy10_09_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_10_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -128,7 +136,7 @@
    "color": "white",
    "hex": "#f1d9af",
    "size": 0.0075,
-   "cutout": "cutouts/Daisy_Daisy10_10_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_11_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -136,7 +144,7 @@
    "color": "white",
    "hex": "#a0a8a9",
    "size": 0.0107,
-   "cutout": "cutouts/Daisy_Daisy10_11_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_12_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -144,7 +152,7 @@
    "color": "white",
    "hex": "#f1e3c1",
    "size": 0.0198,
-   "cutout": "cutouts/Daisy_Daisy10_12_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_13_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -152,7 +160,7 @@
    "color": "yellow",
    "hex": "#b6ad8b",
    "size": 0.0056,
-   "cutout": "cutouts/Daisy_Daisy10_13_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_14_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -160,7 +168,7 @@
    "color": "white",
    "hex": "#e0d1b3",
    "size": 0.0118,
-   "cutout": "cutouts/Daisy_Daisy10_14_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_15_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -168,7 +176,7 @@
    "color": "white",
    "hex": "#f3e6c2",
    "size": 0.0155,
-   "cutout": "cutouts/Daisy_Daisy10_15_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_16_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -176,7 +184,7 @@
    "color": "white",
    "hex": "#e2d9b3",
    "size": 0.0053,
-   "cutout": "cutouts/Daisy_Daisy10_16_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_17_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -184,7 +192,7 @@
    "color": "white",
    "hex": "#f6eac8",
    "size": 0.0209,
-   "cutout": "cutouts/Daisy_Daisy10_17_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_18_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -192,7 +200,7 @@
    "color": "white",
    "hex": "#f4e7c2",
    "size": 0.0328,
-   "cutout": "cutouts/Daisy_Daisy10_18_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_19_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -200,7 +208,7 @@
    "color": "white",
    "hex": "#f8ebc8",
    "size": 0.0249,
-   "cutout": "cutouts/Daisy_Daisy10_19_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_20_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -208,7 +216,7 @@
    "color": "white",
    "hex": "#f3e5c0",
    "size": 0.0172,
-   "cutout": "cutouts/Daisy_Daisy10_20_daisy.png"
+   "cutout": "cutouts/Daisy_Daisy10_21_daisy.png"
   },
   {
    "image": "Daisy_Daisy10.jpg",
@@ -216,14 +224,6 @@
    "color": "white",
    "hex": "#f9eecb",
    "size": 0.0115,
-   "cutout": "cutouts/Daisy_Daisy10_21_daisy.png"
-  },
-  {
-   "image": "Daisy_Daisy10.jpg",
-   "species": "daisy",
-   "color": "white",
-   "hex": "#8f9289",
-   "size": 0.0123,
    "cutout": "cutouts/Daisy_Daisy10_22_daisy.png"
   },
   {
@@ -279,7 +279,7 @@
    "species": "daisy",
    "color": "white",
    "hex": "#f9ebc2",
-   "size": 0.0264,
+   "size": 0.0263,
    "cutout": "cutouts/Daisy_Daisy10_29_daisy.png"
   },
   {
@@ -294,7 +294,7 @@
    "image": "Daisy_Daisy10.jpg",
    "species": "daisy",
    "color": "white",
-   "hex": "#abaca1",
+   "hex": "#ababa1",
    "size": 0.0101,
    "cutout": "cutouts/Daisy_Daisy10_31_daisy.png"
   },
@@ -375,16 +375,16 @@
    "species": "daisy",
    "color": "white",
    "hex": "#dde3e0",
-   "size": 0.0063,
+   "size": 0.0064,
    "cutout": "cutouts/Daisy_Daisy11_09_daisy.png"
   },
   {
    "image": "Daisy_Daisy11.jpg",
-   "species": "rose",
+   "species": "unknown",
    "color": "blue",
    "hex": "#8e8bae",
    "size": 0.0029,
-   "cutout": "cutouts/Daisy_Daisy11_10_rose.png"
+   "cutout": "cutouts/Daisy_Daisy11_10_unknown.png"
   },
   {
    "image": "Daisy_Daisy11.jpg",
@@ -407,16 +407,16 @@
    "species": "daisy",
    "color": "white",
    "hex": "#e3e8e4",
-   "size": 0.0048,
+   "size": 0.0047,
    "cutout": "cutouts/Daisy_Daisy11_13_daisy.png"
   },
   {
    "image": "Daisy_Daisy11.jpg",
-   "species": "tulip",
+   "species": "unknown",
    "color": "yellow",
    "hex": "#989150",
    "size": 0.0023,
-   "cutout": "cutouts/Daisy_Daisy11_14_tulip.png"
+   "cutout": "cutouts/Daisy_Daisy11_14_unknown.png"
   },
   {
    "image": "Daisy_Daisy11.jpg",
@@ -534,7 +534,7 @@
    "image": "Daisy_Daisy11.jpg",
    "species": "rose",
    "color": "white",
-   "hex": "#a9ac9d",
+   "hex": "#a9ac9c",
    "size": 0.0028,
    "cutout": "cutouts/Daisy_Daisy11_29_rose.png"
   },
@@ -604,11 +604,11 @@
   },
   {
    "image": "Daisy_Daisy11.jpg",
-   "species": "tulip",
+   "species": "unknown",
    "color": "yellow",
    "hex": "#b8bd8c",
    "size": 0.0009,
-   "cutout": "cutouts/Daisy_Daisy11_38_tulip.png"
+   "cutout": "cutouts/Daisy_Daisy11_38_unknown.png"
   },
   {
    "image": "Daisy_Daisy11.jpg",
@@ -623,7 +623,7 @@
    "species": "daisy",
    "color": "white",
    "hex": "#d2d7d0",
-   "size": 0.0043,
+   "size": 0.0042,
    "cutout": "cutouts/Daisy_Daisy11_40_daisy.png"
   },
   {
@@ -700,11 +700,11 @@
   },
   {
    "image": "Sunflower_Sunflower10.jpg",
-   "species": "sunflower",
+   "species": "unknown",
    "color": "yellow",
    "hex": "#e9c31e",
    "size": 0.059,
-   "cutout": "cutouts/Sunflower_Sunflower10_01_sunflower.png"
+   "cutout": "cutouts/Sunflower_Sunflower10_01_unknown.png"
   },
   {
    "image": "Sunflower_Sunflower10.jpg",
@@ -719,7 +719,7 @@
    "species": "sunflower",
    "color": "yellow",
    "hex": "#c38b1a",
-   "size": 0.0675,
+   "size": 0.067,
    "cutout": "cutouts/Sunflower_Sunflower11_01_sunflower.png"
   },
   {
@@ -799,7 +799,7 @@
    "species": "tulip",
    "color": "pink",
    "hex": "#edadb7",
-   "size": 0.0198,
+   "size": 0.0199,
    "cutout": "cutouts/Tulip_Tulip1_04_tulip.png"
   },
   {

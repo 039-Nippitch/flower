@@ -32,6 +32,17 @@ function onPick(e){const f=e.target.files[0];e.target.value='';if(!f)return;
 $('#file').onchange=onPick;$('#cam').onchange=onPick;
 $('#takePhoto').onclick=()=>$('#cam').click();
 $('#sample').onclick=()=>{state.photo=sampleSVG();go('found')};
+/* load results/bouquet_input/bouquet.json made by flower_counter_demo_4ชนิด.ipynb */
+$('#loadAI').onclick=()=>$('#aiFile').click();
+$('#aiFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+  try{const d=JSON.parse(await f.text());
+    const fl=(d.flowers||[]).filter(x=>x&&typeof x.n==='string'&&/^#[0-9a-f]{6}$/i.test(x.c)&&x.q>=1)
+      .map(x=>({n:x.n.replace(/[<>&"]/g,''),c:x.c,q:Math.round(x.q)}));
+    if(!fl.length)return toast('No flowers in this file');
+    state.flowers=fl;const si=STYLES.findIndex(s=>s.n===d.style);if(si>=0)state.style=si;
+    const ci=['bouquet','narrow vase','wide vase','mug'].findIndex(k=>String(d.container||'').includes(k));if(ci>=0)state.container=ci;
+    state.photo=sampleSVG();go('found');toast(`Loaded ${fl.length} flower types from AI`)}
+  catch{toast('Could not read this file')}};
 function sampleSVG(){const s=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><rect width='600' height='600' fill='#cfd8d3'/><g stroke='#6f8f72' stroke-width='6'><path d='M300 600V330M250 600L270 330M350 600L330 330'/></g><g><circle cx='300' cy='290' r='55' fill='#e48a9e'/><circle cx='235' cy='320' r='48' fill='#f3c9cf'/><circle cx='365' cy='320' r='48' fill='#d56b86'/><circle cx='300' cy='235' r='44' fill='#f7e2e3'/><circle cx='260' cy='255' r='38' fill='#fff'/></g></svg>`;return 'data:image/svg+xml;utf8,'+encodeURIComponent(s)}
 function photoCSS(){return state.photo?`url("${state.photo}")`:'none'}
 

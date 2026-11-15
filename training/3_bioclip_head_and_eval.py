@@ -1,6 +1,8 @@
 # แบบ B: BioCLIP 2 (ไม่เทรนตัวมันเอง) ดึง feature → เทรน linear head (logistic regression) บอกชนิด
 # แล้ววัดผลบน test เทียบ 3 แบบ: BioCLIP zero-shot (แบบที่เดโมใช้อยู่) | BioCLIP + head ที่เราเทรน | YOLO11n-cls ที่เราเทรน
-# ผล: runs/classify/species_bioclip_head.pt, results/species_eval/{metrics.json, cm_*.png, compare.png}
+# ผล: runs/classify/species_bioclip_head{_v2}.pt, results/species_eval{_v2}/{metrics.json, cm_*.png, compare.png}
+# ใช้: python 3_bioclip_head_and_eval.py        (v1: other = แดนดิไลออน)
+#     python 3_bioclip_head_and_eval.py v2     (v2: other = แดนดิไลออน + Oxford 102, ต้องรัน 1b ก่อน)
 import os, glob, json, ast
 import numpy as np
 import torch, open_clip
@@ -10,8 +12,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = os.path.join(ROOT, "datasets", "tf_flowers_cls")
-OUT = os.path.join(ROOT, "results", "species_eval")
+import sys
+V2 = sys.argv[1:] == ["v2"]
+SUF = "_v2" if V2 else ""
+DATA = os.path.join(ROOT, "datasets", "species_cls_v2" if V2 else "tf_flowers_cls")
+OUT = os.path.join(ROOT, "results", "species_eval" + SUF)
 os.makedirs(OUT, exist_ok=True)
 CLASSES = ["daisy", "rose", "sunflower", "tulip", "other"]
 dev = "cuda" if torch.cuda.is_available() else "cpu"
@@ -91,7 +96,7 @@ def pred(W, X):
 best = max(((wd, train_head(wd)) for wd in [0, 1e-4, 1e-3, 1e-2, 1e-1]), key=lambda t: (pred(t[1], Xva) == yva).mean())
 head = best[1]
 torch.save({"state_dict": head.state_dict(), "classes": CLASSES, "scale": scale ** 0.5, "backbone": "hf-hub:imageomics/bioclip-2"},
-           os.path.join(ROOT, "runs", "classify", "species_bioclip_head.pt"))
+           os.path.join(ROOT, "runs", "classify", f"species_bioclip_head{SUF}.pt"))
 lp = pred(head, Xte)
 print("head wd", best[0], "val acc", (pred(head, Xva) == yva).mean(), flush=True)
 
@@ -107,7 +112,7 @@ for t in [0.5, 0.6, 0.7, 0.8, 0.9]:
     print(f"guard thr {t}: test acc {(g == yte).mean():.3f}", flush=True)
 
 # ---------- 3) YOLO11n-cls ที่เทรนไว้ (2_train_yolo_cls.py) ----------
-yolo_w = os.path.join(ROOT, "runs", "classify", "species_yolo11n_cls", "weights", "best.pt")
+yolo_w = os.path.join(ROOT, "runs", "classify", "species_yolo11n_cls" + SUF, "weights", "best.pt")
 res = {"BioCLIP 2 zero-shot": zs, "BioCLIP 2 + head (เราเทรน)": lp, "BioCLIP 2 + head + guard (ใช้ในเดโม)": guard}
 if os.path.exists(yolo_w):
     from ultralytics import YOLO
@@ -145,8 +150,14 @@ ks = list(metrics)
 ax.barh(ks, [metrics[k]["accuracy"] for k in ks], color="#5b8c5a")
 for i, k in enumerate(ks):
     ax.text(metrics[k]["accuracy"] + 0.005, i, f"{metrics[k]['accuracy']:.1%}", va="center")
-ax.set_xlim(0, 1.08); ax.set_xlabel(f"Test accuracy (TF Flowers test, n={len(yte)})")
+ax.set_xlim(0, 1.08); ax.set_xlabel(f"Test accuracy ({'TF Flowers + Oxford 102' if V2 else 'TF Flowers'} test, n={len(yte)})")
 fig.tight_layout(); fig.savefig(os.path.join(OUT, "compare.png"), dpi=150); plt.close(fig)
+# ดอกชนิดที่ไม่เคยเห็นตอนเทรน (Oxford ชุด test แบ่งตามชนิด) ถูกปัดเป็น other กี่ %
+ox = np.array([os.path.basename(f).startswith("ox") for f, _ in files("test")])
+if ox.any():
+    for k, yp in res.items():
+        metrics[k]["unseen_species_to_other"] = round(float((yp[ox] == 4).mean()), 4)
+        print(f"{k:32s} unseen species → other {metrics[k]['unseen_species_to_other']:.1%} (n={ox.sum()})")
 json.dump(metrics, open(os.path.join(OUT, "metrics.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 for k, m in metrics.items():
     print(f"{k:32s} acc {m['accuracy']:.3f}  macroF1 {m['macro_f1']:.3f}  {m['per_class_f1']}")

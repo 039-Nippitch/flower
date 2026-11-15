@@ -19,7 +19,7 @@ function go(id,back){
   $('#top').hidden=!chrome; $('#progress').hidden=!chrome;
   $('#stepLabel').textContent=`STEP ${step} OF ${TOTAL}`;
   const pct=Math.round(step/TOTAL*100); $('#stepPct').textContent=pct+'%'; $('#bar').style.width=pct+'%';
-  if(id==='found') renderInv(); if(id==='review') renderReview();
+  if(id==='found') renderInv(); if(id==='review') renderReview(); if(id==='style'||id==='container') renderOpts();
   if(id==='crop') $('#cropimg').style.backgroundImage=photoCSS();
 }
 $$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
@@ -107,8 +107,10 @@ function optList(root,items,key,thumb){
   root.innerHTML='';items.forEach((it,i)=>{const b=document.createElement('button');b.className='opt'+(state[key]===i?' on':'');
     b.innerHTML=`<div class="thumb art" style="${thumb(it)}"></div><div><b>${it.n}</b><small>${it.d}</small></div><span class="radio">✓</span>`;
     b.onclick=()=>{state[key]=i;optList(root,items,key,thumb)};root.append(b)})}
-optList($('#styleOpts'),STYLES,'style',s=>`background:radial-gradient(circle at 40% 40%,${s.c} 0 30%,transparent 31%),#e8ebe0`);
-optList($('#contOpts'),CONTS,'container',()=>'background:radial-gradient(ellipse at 50% 60%,#fff 0 40%,transparent 41%),#efe9dd');
+function renderOpts(){   // redraw on every visit so the highlighted option always matches state (AI results can change it)
+  optList($('#styleOpts'),STYLES,'style',s=>`background:radial-gradient(circle at 40% 40%,${s.c} 0 30%,transparent 31%),#e8ebe0`);
+  optList($('#contOpts'),CONTS,'container',()=>'background:radial-gradient(ellipse at 50% 60%,#fff 0 40%,transparent 41%),#efe9dd')}
+renderOpts();
 
 /* review + result */
 function renderReview(){

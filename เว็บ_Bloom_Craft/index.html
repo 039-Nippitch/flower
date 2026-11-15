@@ -45,8 +45,8 @@
 </div>
 <div class="main">
       <label class="drop" id="drop">
-        <input type="file" id="file" accept="image/*" hidden>
-        <div id="dropEmpty"><span class="dot">🖼</span><b>Add a flower photo</b><small>JPG, PNG, or HEIC · up to 12MB</small>
+        <input type="file" id="file" accept="image/*" multiple hidden>
+        <div id="dropEmpty"><span class="dot">🖼</span><b>Add flower photos</b><small>JPG, PNG, or HEIC · up to 12MB each · up to 10 photos</small>
           <span class="pill">⬆ Choose from library</span></div>
         <img id="preview" alt="Your flower photo" hidden>
       </label>
@@ -72,8 +72,10 @@
 <div class="main">
       <div class="cropbox" id="cropbox"><div class="cropimg" id="cropimg"></div><div class="frame"><span>📷 Place flowers here</span></div></div>
       <div class="zoom"><span>–</span><input type="range" id="zoom" min="1" max="2.5" step="0.05" value="1" aria-label="Zoom photo"><span>+</span></div>
+      <p class="tiny" id="photoCount" hidden></p>
       <button class="btn" id="analyze">✓ Use this crop</button>
-      <button class="link" data-go="upload">Choose a different photo</button>
+      <button class="link" data-go="upload">＋ Add more photos</button>
+      <button class="link" id="clearPhotos">Choose different photos</button>
 </div>
     </div>
   </section>
@@ -88,6 +90,7 @@
 </div>
 <div class="main">
       <div class="photo art" data-art="bouquet"><span class="chip">✓ 98% confident</span></div>
+      <div class="thumbs" id="aiThumbs" hidden></div>
       <div class="inv-head"><h3>Your flower inventory</h3><span class="pill sm" id="varCount"></span></div>
       <p class="tiny left" id="stemCount"></p>
       <ul class="inv" id="inv"></ul>

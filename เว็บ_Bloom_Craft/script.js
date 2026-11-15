@@ -24,12 +24,20 @@ function go(id,back){
 }
 $$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 $('#back').onclick=()=>{ if(state.history.length>1){state.history.pop();go(state.history[state.history.length-1],true)} };
-$('#restart').onclick=()=>{state.history=['home'];state.photo=null;state.file=null;showAIPhoto(null);$('#preview').hidden=true;$('#dropEmpty').hidden=false;go('home',true)};
+$('#restart').onclick=()=>{state.history=['home'];state.photo=null;state.files=[];showAIPhoto(null);$('#preview').hidden=true;$('#dropEmpty').hidden=false;go('home',true)};
 
-/* upload: after choosing or taking a photo, go straight to crop */
-function setPhoto(url){state.photo=url;const p=$('#preview');p.src=url;p.hidden=false;$('#dropEmpty').hidden=true;go('crop')}
-function onPick(e){const f=e.target.files[0];e.target.value='';if(!f)return;
-  if(f.size>12*1048576)return toast('Photo is over 12MB — choose a smaller one');state.file=f;setPhoto(URL.createObjectURL(f))}
+/* upload: photos add up (library = several at once, camera = one per shot) → crop shows the latest */
+const MAX_PHOTOS=10;   // = MAX_IMAGES in the notebook
+state.files=[];
+function setPhoto(url){state.photo=url;const p=$('#preview');p.src=url;p.hidden=false;$('#dropEmpty').hidden=true;
+  const n=state.files.length,c=$('#photoCount');c.hidden=n<2;c.textContent=`${n} photos selected — flowers from all photos go into one bouquet`;
+  $('#analyze').textContent=n>1?`✓ Analyze ${n} photos`:'✓ Use this crop';go('crop')}
+function onPick(e){const fs=[...e.target.files];e.target.value='';if(!fs.length)return;
+  const ok=fs.filter(f=>f.size<=12*1048576);if(ok.length<fs.length)toast('Skipped photos over 12MB');
+  const room=MAX_PHOTOS-state.files.length;if(ok.length>room)toast(`Up to ${MAX_PHOTOS} photos — extra ones skipped`);
+  const add=ok.slice(0,Math.max(0,room));if(!add.length)return;
+  state.files.push(...add);setPhoto(URL.createObjectURL(add[add.length-1]))}
+$('#clearPhotos').onclick=()=>{state.files=[];$('#preview').hidden=true;$('#dropEmpty').hidden=false;go('upload')};
 $('#file').onchange=onPick;$('#cam').onchange=onPick;
 $('#takePhoto').onclick=()=>$('#cam').click();
 $('#sample').onclick=()=>{state.photo=sampleSVG();showAIPhoto(null);go('found')};
@@ -47,18 +55,24 @@ function useAI(d){
   state.flowers=fl;state.ref=null;const si=STYLES.findIndex(s=>s.n===d.style);if(si>=0)state.style=si;
   const ci=['bouquet','narrow vase','wide vase','mug'].findIndex(k=>String(d.container||'').includes(k));if(ci>=0)state.container=ci;
   return true}
-function showAIPhoto(d){const p=$('#found .photo'),chip=$('.chip',p);
-  p.style.background=d?`#eee url("${d.photo}") center/contain no-repeat`:'';
-  chip.textContent=d?`✓ AI found ${d.n} flower${d.n===1?'':'s'}`:'✓ 98% confident'}
+function showAIPhoto(d){const p=$('#found .photo'),chip=$('.chip',p),th=$('#aiThumbs');
+  const pics=d?d.photos:[],show=i=>{p.style.background=`#eee url("${pics[i]}") center/contain no-repeat`;
+    $$('button',th).forEach((b,k)=>b.classList.toggle('on',k===i))};
+  th.innerHTML='';th.hidden=pics.length<2;p.style.background='';
+  pics.forEach((u,i)=>{const b=document.createElement('button');b.style.backgroundImage=`url("${u}")`;
+    b.setAttribute('aria-label',`Show photo ${i+1}`);b.onclick=()=>show(i);th.append(b)});
+  if(pics.length)show(0);
+  chip.textContent=d?`✓ AI found ${d.n} flower${d.n===1?'':'s'}${pics.length>1?` in ${pics.length} photos`:''}`:'✓ 98% confident'}
 /* when this page is served by the notebook (cell 10), send the photo to the real model */
 async function analyzeAI(){
   $('#loading p').textContent='Identifying your flowers…';$('#loading').hidden=false;
-  try{const fd=new FormData();fd.append('image',state.file);
+  try{const fd=new FormData();state.files.forEach(f=>fd.append('images',f));
     const r=await fetch('api/analyze',{method:'POST',body:fd});const d=await r.json();
-    if(!r.ok)return toast(d.error==='too_big'?'Photo is over 12MB — choose a smaller one':'Could not read this photo');
+    if(!r.ok)return toast(d.error==='too_big'?'A photo is over 12MB — choose a smaller one':d.error==='too_many'?`Up to ${MAX_PHOTOS} photos at a time`:'Could not read one of the photos');
     if(!d.is_flower)return toast(d.reason==='drawn'?'This looks like a drawing — please use a real flower photo':'No flowers found — try another photo');
-    if(!/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(d.photo||'')||!useAI(d))return toast('No flowers found — try another photo');
-    state.ref=typeof d.ref==='string'?d.ref:null;showAIPhoto(d);go('found')}
+    if(!Array.isArray(d.photos)||!d.photos.length||!d.photos.every(u=>/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(u))||!useAI(d))return toast('No flowers found — try another photo');
+    state.ref=typeof d.ref==='string'?d.ref:null;showAIPhoto(d);go('found');
+    const sk=(d.rejected||[]).length;if(sk)toast(`${sk} photo${sk>1?'s':''} skipped — not a real flower photo`)}
   catch{toast('AI server is not reachable — is the notebook still running?')}
   finally{$('#loading').hidden=true}}
 function sampleSVG(){const s=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><rect width='600' height='600' fill='#cfd8d3'/><g stroke='#6f8f72' stroke-width='6'><path d='M300 600V330M250 600L270 330M350 600L330 330'/></g><g><circle cx='300' cy='290' r='55' fill='#e48a9e'/><circle cx='235' cy='320' r='48' fill='#f3c9cf'/><circle cx='365' cy='320' r='48' fill='#d56b86'/><circle cx='300' cy='235' r='44' fill='#f7e2e3'/><circle cx='260' cy='255' r='38' fill='#fff'/></g></svg>`;return 'data:image/svg+xml;utf8,'+encodeURIComponent(s)}
@@ -72,7 +86,7 @@ function photoCSS(){return state.photo?`url("${state.photo}")`:'none'}
  box.onpointermove=e=>{if(!drag)return;x=e.clientX-drag.x;y=e.clientY-drag.y;apply()};
  box.onpointerup=()=>{drag=null;box.style.cursor='grab'};
 })();
-$('#analyze').onclick=()=>{if(state.file&&location.protocol.startsWith('http'))return analyzeAI();
+$('#analyze').onclick=()=>{if(state.files.length&&location.protocol.startsWith('http'))return analyzeAI();
   load('Identifying your flowers…',1400,()=>go('found'))};
 function load(msg,ms,done){$('#loading p').textContent=msg;$('#loading').hidden=false;setTimeout(()=>{$('#loading').hidden=true;done()},ms)}
 

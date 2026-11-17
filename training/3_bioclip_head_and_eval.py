@@ -54,7 +54,7 @@ Xtr, ytr = feats("train"); Xva, yva = feats("val"); Xte, yte = feats("test")
 print("features", Xtr.shape, Xva.shape, Xte.shape, flush=True)
 
 # ---------- 1) zero-shot: รายชื่อ 55 ชนิด + prompt เดียวกับโน้ตบุ๊ก → ชนิดที่ไม่ใช่ 4 ชนิด / ความมั่นใจ < 0.35 = other ----------
-nb = json.load(open(os.path.join(ROOT, "flower_counter_demo_4ชนิด.ipynb"), encoding="utf-8"))
+nb = json.load(open(os.path.join(ROOT, "old_versions", "flower_counter_demo_4ชนิด.ipynb"), encoding="utf-8"))
 src = "\n".join("".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code")
 src = "\n".join(l for l in src.splitlines() if not l.lstrip().startswith(("%", "!")))   # คำสั่ง %pip / ! ไม่ใช่ Python
 ns = {}

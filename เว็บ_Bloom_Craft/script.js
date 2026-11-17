@@ -41,7 +41,7 @@ $('#clearPhotos').onclick=()=>{state.files=[];$('#preview').hidden=true;$('#drop
 $('#file').onchange=onPick;$('#cam').onchange=onPick;
 $('#takePhoto').onclick=()=>$('#cam').click();
 $('#sample').onclick=()=>{state.photo=sampleSVG();showAIPhoto(null);go('found')};
-/* load results/bouquet_input/bouquet.json made by flower_counter_demo_4ชนิด.ipynb */
+/* load results/bouquet_input/bouquet.json made by flower_counter_demo_4ชนิด_v6_แบ่งโซน.ipynb */
 $('#loadAI').onclick=()=>$('#aiFile').click();
 $('#aiFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
   try{const d=JSON.parse(await f.text());if(!useAI(d))return toast('No flowers in this file');

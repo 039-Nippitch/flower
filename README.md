@@ -1,222 +1,89 @@
-# โปรเจกต์นับดอกไม้ + บอกชนิด + บอกสี → เจนรูปช่อดอกไม้
+# 🌸 Bloom Craft
 
-> สรุปสำหรับคนที่เพิ่งมาทำต่อ อัปเดตล่าสุด **15 พ.ย. 2026**
-> วิชา INT182 กลุ่ม 1 **ส่งสไลด์ (PDF) ภายใน 17 พ.ย. 2026 ก่อนเที่ยงคืน** ดูรายละเอียดใน `ส่งงาน/final.txt`
+**INT182 กลุ่ม 1** · ถ่ายรูปดอกไม้ → AI **หาดอกทุกดอก นับจำนวน บอกชนิด บอกสี** → เลือกสไตล์และภาชนะ → **เจนรูปช่อดอกไม้** โดยใช้ดอกจริงจากรูปเป็นตัวอ้างอิง
 
-> **หมายเหตุสำหรับ repo นี้:** ไม่มีโฟลเดอร์ `datasets/` (ใหญ่เกิน) — TF Flowers ดาวน์โหลดจาก TensorFlow Datasets แล้วรัน `training/1_split_tfflowers.py`
-> ไม่มี `to_upload_roboflow/` ตามที่ README พูดถึง (อยู่ในเครื่องของทีม)
-> Roboflow key / HF token ห้ามใส่ในไฟล์: ใช้ environment variable `ROBOFLOW_API_KEY` และ `hf auth login`
+ชนิดที่รองรับ: **rose · tulip · sunflower · daisy** (ชนิดอื่นตอบ `unknown`) · รูปการ์ตูน เกม ภาพวาด และรูปที่ไม่ใช่ดอกไม้จะถูกปัดตก
 
----
-
-## 1. โปรเจกต์นี้ทำอะไร
-
-ผู้ใช้ถ่ายรูปดอกไม้ที่มี ระบบจะบอกว่า **มีดอกอะไร กี่ดอก สีอะไร** แล้วเอาข้อมูลนี้ไป **เจนรูปช่อดอกไม้** ให้ดูว่าจัดแล้วจะออกมาหน้าตาเป็นยังไง
-
-ตอนนี้จะสาธิตให้อาจารย์ดูแค่ **4 ชนิด** คือ **กุหลาบ (rose) ทิวลิป (tulip) ทานตะวัน (sunflower) และเดซี่ (daisy)** ดอกชนิดอื่นจะตอบว่า `unknown`
-
-เว็บ **Bloom Craft** อยู่ใน `เว็บ_Bloom_Craft/` ต่อกับ AI แล้ว (รันเซลล์ 10 ของโน้ตบุ๊ก) ต้นฉบับของเพื่อนเก็บไว้ที่ `old_versions/เว็บ_ต้นฉบับ_เพื่อน/`
-
-```
-ถ่ายรูป → [ระบบของเรา] → "กุหลาบชมพู 3, เดซี่ขาว 5" → [โมเดลเจนรูป] → รูปช่อดอกไม้
-           ^^^^^^^^^^^^ เสร็จแล้ว                              ^^^^^^^^^^^^ ยังไม่ได้ทำ
-```
+![Architecture](results/architecture.png)
 
 ---
 
-## 2. ระบบทำงานยังไง (pipeline)
+## ▶️ วิธีรัน (Google Colab ฟรี 2 บัญชี)
 
-```
-รูปเข้า
- ① กรองรูป ........ CLIP ViT-B-32  → เป็นรูปดอกไม้ไหม เป็นการ์ตูนหรือเกมไหม เป็นดอกไม้ปลอมไหม
- ② หาดอก ......... SAM 3          → ได้กรอบและรูปทรง (mask) ของดอกทีละดอก = "จำนวน"
- ③ ครอปทีละดอก
- ④ กรองครอป ....... CLIP ViT-B-32  → ตัดใบไม้หรือแจกันที่ถูกหาเจอผิดทิ้ง
- ⑤ บอกชนิด ........ BioCLIP 2      → rose / tulip / sunflower / daisy / unknown
- ⑥ บอกสี .......... (ไม่ใช้ AI)     → คำนวณจากสีพิกเซลในรูปทรงดอก ได้ชื่อสี + รหัสสี เช่น pink #e89faf
- ⑦ ส่งออก ......... bouquet.json + รูปดอกตัดพื้นหลัง → ใช้ต่อในขั้นเจนรูป
- ⑧ เจนรูปช่อดอกไม้  (ยังไม่ได้ทำ)
-```
-
-### โมเดลที่ใช้
-
-| โมเดล | ใช้ทำอะไร | ต้องเทรนเองไหม |
+| ลำดับ | Notebook | ทำอะไร |
 |---|---|---|
-| **SAM 3** (Meta) | หาตำแหน่งดอก นับดอก และตัดรูปทรงดอก | ไม่ต้อง สั่งด้วยคำว่า "flower" ได้เลย |
-| **BioCLIP 2** | บอกชนิดดอก (รู้จักสิ่งมีชีวิตเป็นแสนชนิด) | ไม่ต้อง แต่เราเทรน "ส่วนหัว" เพิ่มแล้ว ดูข้อ 5 |
-| **CLIP ViT-B-32** (OpenAI) | ด่านกรอง: ดอกไม้จริง / การ์ตูน / ดอกไม้ปลอม | ไม่ต้อง |
-| CLIP ViT-L-14 (OpenAI) | ช่วยบอกชนิดเฉพาะตอนเจอดอกไม้ปลอม | ไม่ต้อง |
+| 1 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/039-Nippitch/flower/blob/main/bloom_craft_gen_sdxl.ipynb) `bloom_craft_gen_sdxl.ipynb` | เครื่องเจนรูป (SDXL) · บัญชี A |
+| 2 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/039-Nippitch/flower/blob/main/flower_counter_demo_4%E0%B8%8A%E0%B8%99%E0%B8%B4%E0%B8%94_v6_%E0%B9%81%E0%B8%9A%E0%B9%88%E0%B8%87%E0%B9%82%E0%B8%8B%E0%B8%99.ipynb) `flower_counter_demo_4ชนิด_v6_แบ่งโซน.ipynb` | วิเคราะห์รูป + เว็บ Bloom Craft · บัญชี B |
 
-> **ทำไมใช้โมเดลสำเร็จรูป?** เราลองเทรน YOLO หาดอกเองแล้ว (ข้อ 4) แต่สู้โมเดลสำเร็จรูปไม่ได้ เพราะรูปที่มีน้อยเกินไป
+1. **บัญชี A:** เปิด notebook 1 → Runtime → Change runtime type → **T4 GPU** → Run all → คัดลอกลิงก์ `GEN_URL = 'https://….trycloudflare.com'`
+2. **บัญชี B:** ตั้ง Colab Secret ชื่อ `HF_TOKEN` (เปิด Notebook access · ต้องขอสิทธิ์ใช้ [SAM 3](https://huggingface.co/facebook/sam3) ก่อน)
+3. เปิด notebook 2 → ใส่ลิงก์จากข้อ 1 ใน `GEN_URL = "..."` (ข้อ 2 ตั้งค่า) → **T4 GPU** → Run all
+4. เปิดลิงก์เว็บที่ notebook 2 พิมพ์ออกมา (เปิดจากมือถือได้)
+
+> แยก 2 เครื่องเพราะ SAM 3 + SDXL อยู่เครื่องเดียวกันแล้วแรม Colab ฟรีเต็ม · ถ้าเครื่องเจนรูปหลุดแล้วได้ลิงก์ใหม่ แค่สั่ง `GEN_URL = "ลิงก์ใหม่"` ในเครื่อง 2 ไม่ต้องรันใหม่
 
 ---
 
-## 3. ไฟล์ไหนคืออะไร
+## 🧠 โมเดล
 
-### ใช้งานจริง (อยู่นอกสุด)
-| ไฟล์ | คืออะไร |
+| ขั้น | โมเดล | หมายเหตุ |
+|---|---|---|
+| กรองรูป (ดอกไม้จริงไหม) | CLIP ViT-B/32 (OpenAI) | สำเร็จรูป |
+| หาดอก + mask | SAM 3 (Meta) + ตัวกรองของเรา | conf ≥ 0.6 · ตัดกล่องเล็กกว่า 5% ของดอกที่ใหญ่สุด |
+| บอกชนิด | **BioCLIP 2 + head ที่ทีมเทรน** | Linear 768 → 5 คลาส |
+| บอกสี | คำนวณจากพิกเซลใน mask | ไม่ใช้ AI |
+| เจนช่อดอกไม้ | RealVisXL V5.0 (SDXL) + IP-Adapter Plus | แบ่งโซนชนิดละโซน + วาดซ้ำทีละโซน |
+
+## 📊 ผลลัพธ์
+
+**หาดอก** (รูปทดสอบ 23 รูป นับเฉลยด้วยมือ · ยิ่งน้อยยิ่งดี)
+
+| โมเดล | นับผิดรวม (ดอก) | นับตรงทั้งรูป |
+|---|---|---|
+| YOLO11 ที่เราเทรน | 31 | 10/23 |
+| YOLO + OWLv2 | 32 | 10/23 |
+| SAM 3 (ไม่กรอง) | 28 | 10/23 |
+| OWLv2 (Google) | 23 | 12/23 |
+| **SAM 3 + ตัวกรองของเรา** ✓ | **13** | **15/23** |
+
+**บอกชนิด** (Test 672 รูป · 5 คลาส: daisy, rose, sunflower, tulip, other)
+
+| โมเดล | Accuracy | Macro-F1 | ดอกที่ไม่เคยเห็น → other |
+|---|---|---|---|
+| BioCLIP 2 zero-shot | 89.3% | 0.899 | 98.3% |
+| YOLO11n-cls (เราเทรน) | 93.1% | 0.927 | 90.8% |
+| **BioCLIP 2 + head (เราเทรน)** ✓ | **97.3%** | **0.973** | **99.2%** |
+
+Confusion matrix และกราฟ: [`results/species_eval_v2/`](results/species_eval_v2/)
+
+![ตัวอย่างผลวิเคราะห์](results/demo_ผลลัพธ์_v3.jpg)
+
+## 📁 โครงสร้าง
+
+| โฟลเดอร์ / ไฟล์ | คืออะไร |
 |---|---|
-| ⭐ `flower_counter_demo_4ชนิด.ipynb` | **ตัวที่ใช้สาธิต** 4 ชนิด + สี + ส่งออก bouquet.json |
-| `flower_counter_v5.0_sam3.ipynb` | ตัวเต็ม บอกชนิดได้ 55 ชนิด (ไม่จำกัดแค่ 4) |
-| `flower_counter_v4.9_owl2.ipynb` | ตัวเก่า ใช้ OWLv2 หาดอก เร็วกว่าแต่แม่นน้อยกว่า ใช้สำรองถ้าไม่มี GPU |
-| `เฉลยรูปทดสอบ.json` | จำนวนดอกที่ถูกต้องของรูปทดสอบ 23 รูป |
-| `ส่งงาน/final.txt` | โจทย์งานส่ง Phase 3 |
+| `bloom_craft_gen_sdxl.ipynb` | ⭐ เครื่องเจนรูป |
+| `flower_counter_demo_4ชนิด_v6_แบ่งโซน.ipynb` | ⭐ วิเคราะห์รูป + เว็บ |
+| `เว็บ_Bloom_Craft/` | หน้าเว็บ (HTML / CSS / JS) |
+| `training/` | สคริปต์แบ่งข้อมูลและเทรนตัวบอกชนิด · notebook เทรน YOLO / ทดลอง SAM 3 |
+| `runs/` | น้ำหนักโมเดลที่เทรน (head BioCLIP 2, YOLO) |
+| `results/` | confusion matrix · กราฟ · รูปผลเดโม · แผนภาพ |
+| `test_images/` + `เฉลยรูปทดสอบ.json` | รูปทดสอบ 23 รูป + จำนวนดอกเฉลย |
+| `demo_รูป/` | รูปที่ใช้สาธิต |
+| `ส่งงาน/` | โจทย์ + เนื้อหาสไลด์ |
+| `old_versions/` | notebook / เว็บรุ่นก่อน + [บันทึกการทำงานละเอียด](old_versions/README_บันทึกการทำงาน.md) |
 
-### โฟลเดอร์
-| โฟลเดอร์ | ข้างในมีอะไร |
-|---|---|
-| `test_images/` | รูปทดสอบ 23 รูป (**ห้ามเอาไปเทรน** ใช้วัดผลอย่างเดียว) |
-| `demo_รูป/` | รูปที่ใช้สาธิต 4 ชนิด 11 รูป |
-| `training/` | สคริปต์เทรนตัวบอกชนิด (ข้อ 5) |
-| `results/species_eval/` | **confusion matrix + กราฟเทียบโมเดล** สำหรับใส่สไลด์ |
-| `results/bouquet_input/` | ผลที่ส่งออกจากเดโม (bouquet.json + cutouts/) |
-| `runs/detect/` | YOLO หาดอกที่เคยเทรน (ไม่ได้ใช้แล้ว เก็บไว้เทียบ) |
-| `runs/classify/` | ตัวบอกชนิดที่เทรนเอง (YOLO11n-cls + ส่วนหัวของ BioCLIP) |
-| `datasets/` | ข้อมูลทั้งหมด (Bouquet-8, TF Flowers, tf_flowers_cls ที่แบ่งแล้ว) |
-| `to_upload_roboflow/` | รูปที่ตีกรอบร่างไว้ 352 รูป รออัปขึ้น Roboflow (ตอนนี้ไม่จำเป็นแล้ว) |
-| `old_versions/` | โน้ตบุ๊กเวอร์ชันเก่าทั้งหมด |
-| `ส่งงาน/` | **ของส่งอาจารย์**: โจทย์ `final.txt` + สไลด์ v1, v2 (ใส่ PDF ไว้ที่นี่ด้วย) |
-| `เว็บ_Bloom_Craft/` | **เว็บ** ที่ต่อกับ AI แล้ว |
-| `misc/` | zip เว็บที่เพื่อนส่งมา + รูปจากเจ้าของ |
+**เทรนตัวบอกชนิดซ้ำ:** `training/1_split_tfflowers.py` → `1b_build_v2_with_oxford.py` → `2_train_yolo_cls.py v2` → `3_bioclip_head_and_eval.py v2`
 
-ไฟล์ `sam3_test*.zip/.ipynb`, `sam3_raw.json`, `sam3_out-*.zip` เป็นไฟล์ตอนทดลอง SAM 3 บน Colab ลบได้
+## 📚 Reference
 
----
-
-## 4. ประวัติ: ลองอะไรไปแล้วบ้าง (หาดอก + นับดอก)
-
-วัดบนรูปทดสอบ 23 รูป เทียบกับเฉลย "ผิดรวม" = ผลต่างของจำนวนดอกทุกรูปรวมกัน **ยิ่งน้อยยิ่งดี**
-
-| ลำดับ | วิธีหาดอก | ผิดรวม | นับตรงกี่รูป | ผล |
-|---|---|---|---|---|
-| 1 | YOLO ที่เราเทรนเอง (Roboflow Bouquet + flower-count) | ~31 | – | ดอกหลุดเยอะ ข้อมูลน้อยเกิน |
-| 2 | YOLO + OWLv2 รวมกัน | 32 | – | แย่ลง |
-| 3 | OWLv2 (Google) | 23 | 12/23 | ใช้ส่งงานรอบ 9 พ.ย. (v4.9) |
-| 4 | SAM 3 ล้วน | 28 | 10/23 | นับดอกจิ๋วกับดอกย่อยเกิน |
-| 5 | **SAM 3 + ตัวกรอง** | **13** | **15/23** | ✅ **ใช้อยู่ตอนนี้ (v5.0)** |
-
-ตัวกรองของ SAM 3 คือ ใช้ค่าความมั่นใจ ≥ 0.6 และตัดกล่องที่เล็กกว่า 5% ของดอกที่ใหญ่สุดในรูปทิ้ง
-
-> ⚠️ ค่าตัวกรองนี้จูนจากรูป 23 รูปชุดเดียวกับที่ใช้วัดผล ตัวเลข 13 จึงนับเป็นผล **validation** ไม่ใช่ test ถ้าจะอ้างเป็นผล test ต้องวัดบนชุดอื่น เช่น test split ของ Bouquet-8
-
----
-
-## 5. ตัวบอกชนิดที่เราเทรนเอง (ทำ 14 พ.ย.)
-
-อาจารย์ต้องการ Train/Val/Test และ confusion matrix เราจึงเทรนตัวบอกชนิด 4 ชนิด + other
-
-- **ข้อมูล:** TF Flowers 3,670 รูป แบ่ง 70/15/15 ส่วน **other ใช้รูปแดนดิไลออน**
-
-| | daisy | rose | sunflower | tulip | other |
-|---|---|---|---|---|---|
-| Train | 443 | 448 | 489 | 559 | 628 |
-| Val | 95 | 96 | 105 | 120 | 135 |
-| Test | 95 | 97 | 105 | 120 | 135 |
-
-- **ผลบน Test (552 รูป):**
-
-| แบบ | ความแม่น | หมายเหตุ |
-|---|---|---|
-| BioCLIP 2 แบบไม่เทรนเพิ่ม (zero-shot) | 87.3% | ตัวที่เดโมใช้อยู่ตอนนี้ |
-| **BioCLIP 2 + ส่วนหัวที่เราเทรน** | **98.9%** | 🏆 ดีที่สุด |
-| YOLO11n-cls ที่เราเทรน | 94.4% | สับสนกุหลาบกับทิวลิป |
-
-- **รันซ้ำได้:** `python training/1_split_tfflowers.py` → `2_train_yolo_cls.py` → `3_bioclip_head_and_eval.py`
-
-**เดโมตอนนี้ = v3 (head v2 + Oxford 102)** ทำ 14 พ.ย.
-- ปัญหาของ v2: other เคยเห็นแค่แดนดิไลออน ดอกชนิดอื่นใน**ช่อผสม**เลยถูกทายเป็น 1 ใน 4
-- แก้: เพิ่มรูปจาก **Oxford 102 Flowers** เข้า other (99 ชนิด ชนิดละ 8 รูป ตัดเดซี่/ทานตะวัน/กุหลาบออก) แบ่ง**ตามชนิด** → ชนิดใน test ไม่เคยเห็นตอนเทรน
-- ข้อมูล v2: Train 3,119 / Val 671 / Test 672 (other = 1,180 / 255 / 255) อยู่ที่ `datasets/species_cls_v2/`
-- รันซ้ำ: `1_split_tfflowers.py` → `1b_build_v2_with_oxford.py` → `2_train_yolo_cls.py v2` → `3_bioclip_head_and_eval.py v2`
-
-| แบบ (Test v2, 672 รูป) | ความแม่น | ดอกไม่เคยเห็น → other |
-|---|---|---|
-| BioCLIP 2 zero-shot | 89.3% | 98.3% |
-| **BioCLIP 2 + head v2** (ใช้ในเดโม) | **97.3%** | **99.2%** |
-| YOLO11n-cls v2 | 93.1% | 90.8% |
-| head v1 (เทียบ) | 82.6% | 7.5% |
-
-- head v2 ไม่ต้องใช้ด่านกันแล้ว (`GUARD_THR = 1.01` = ปิด)
-- ราคาที่จ่าย: เฉพาะ 4 ชนิดแม่นลดจาก 98.6% → 96.2% ดอก 4 ชนิดจริงบางดอกกลายเป็น unknown
-- ผลกราฟ/confusion matrix: `results/species_eval_v2/` · ผลเดโม: `results/demo_ผลลัพธ์_v3.jpg`
-
-**เวอร์ชันเก่าเก็บไว้ทั้งหมด**
-| เวอร์ชัน | โน้ตบุ๊ก | ตัวบอกชนิด |
-|---|---|---|
-| v1 | `old_versions/flower_counter_demo_4ชนิด_v1_zeroshot.ipynb` | BioCLIP zero-shot |
-| v2 | `old_versions/flower_counter_demo_4ชนิด_v2_head_dandelion.ipynb` | head v1 + ด่านกัน 0.9 (97.1% บน test v1) |
-| **v3** | `flower_counter_demo_4ชนิด.ipynb` | **head v2** |
-
-สไลด์: v1 → `ส่งงาน/สไลด์_v1/` · v2 (ตัวล่าสุด) → `ส่งงาน/สไลด์_v2/`
-
----
-
-## 6. วิธีรัน
-
-### บนเครื่อง (Windows, GTX 1650 Ti 4GB)
-1. ล็อกอิน Hugging Face ครั้งแรกครั้งเดียว: `hf auth login` (SAM 3 ต้องขอสิทธิ์ที่ https://huggingface.co/facebook/sam3 ก่อน)
-2. ใส่รูปใน `demo_รูป/`
-3. เปิด `flower_counter_demo_4ชนิด.ipynb` แล้วกด **Run All**
-4. ผลอยู่ในโน้ตบุ๊ก และไฟล์ส่งออกอยู่ใน `results/bouquet_input/`
-
-**ช้า: รูปละราว 30 วินาที** ควรปิด Chrome ก่อน ไม่งั้นแรมไม่พอ
-
-### บน Colab (แนะนำสำหรับวันสาธิต เร็วกว่ามาก)
-1. Runtime → **T4 GPU**
-2. รูปกุญแจ 🔑 → เพิ่ม Secret ชื่อ **`HF_TOKEN`** (token แบบ Read) → เปิด Notebook access
-3. อัปโหลดโน้ตบุ๊ก `flower_counter_demo_4ชนิด.ipynb` แล้วกด Run all (เซลล์แรกๆ จะ clone โค้ด/โมเดล/รูปเดโม/เว็บจาก GitHub ให้เอง)
-4. เซลล์สุดท้าย (ข้อ 10) พิมพ์ลิงก์ `https://….trycloudflare.com` → เปิดเว็บ Bloom Craft จากมือถือหรือคอมไหนก็ได้ → อัปโหลด/ถ่ายรูป → **Use this crop** → ได้กรอบ ชนิด สี จำนวนจริงจากโมเดล
-5. ลิงก์ใช้ได้เฉพาะตอน Colab ยังเปิดอยู่ ปิดแล้วรันใหม่จะได้ลิงก์ใหม่
-6. ⚠️ **ยังไม่เคยลองรันบน Colab จริง ต้องลองก่อนวันนำเสนอ**
-
-เดโม v4 = v3 + เซลล์เปิดเว็บ (v3 เก็บไว้ที่ `old_versions/flower_counter_demo_4ชนิด_v3_head_v2.ipynb`) · บนเครื่องตัวเองเซลล์ 10 เปิดที่ http://localhost:8000
-
----
-
-## 7. ไฟล์ส่งออกสำหรับเจนรูป (`results/bouquet_input/bouquet.json`)
-
-```json
-{
- "flowers": [{"n": "Tulip (Pink)", "c": "#e89faf", "q": 14}],
- "style": "Soft & Romantic",
- "container": "tall, narrow vase",
- "prompt": "A soft & romantic flower arrangement in a tall, narrow vase, made of exactly 14 pink tulips. ...",
- "items": [{"image": "...", "species": "tulip", "color": "pink", "hex": "#...", "size": 0.05, "cutout": "cutouts/xxx.png"}]
-}
-```
-- **`flowers`:** รูปแบบเดียวกับที่เว็บ Bloom Craft ใช้ เอาไปแทนข้อมูลปลอมในเว็บได้เลย
-- **`prompt`:** ประโยคพร้อมส่งให้โมเดลเจนรูป
-- **`cutout`:** รูปดอกที่ตัดพื้นหลังแล้ว (PNG พื้นใส) ใช้เป็นรูปอ้างอิงให้ช่อที่เจนออกมาหน้าตาเหมือนดอกจริง
-- ⚠️ ตอนนี้รวมดอก**จากทุกรูปในโฟลเดอร์**เป็นช่อเดียว ถ้าต้องการ 1 รูปต่อ 1 ช่อ ให้ใส่รูปแค่รูปเดียว
-
----
-
-## 8. สิ่งที่ต้องทำต่อ (เรียงตามความเร่ง)
-
-**ก่อน 17 พ.ย. (ส่งสไลด์ PDF)** ตามโจทย์ใน `ส่งงาน/final.txt`
-- [x] สไลด์ครบ 12 หน้า (v2) ใน `ส่งงาน/สไลด์_v2/` + โค้ดขึ้น GitHub แล้ว
-- [ ] ใส่ชื่อสมาชิกที่หน้าปก แล้ว export PDF
-
-**ก่อนวันนำเสนอ (สาธิต 8 นาที)**
-- [x] ใส่ส่วนหัว BioCLIP ที่เทรนแล้วเข้าไปในเดโม (v2) และเทรนใหม่ด้วย Oxford 102 (v3)
-- [ ] ลองรันเดโมบน Colab ให้ผ่าน
-- [ ] เตรียมรูปที่ดีที่สุดไว้สาธิต อาจารย์อาจเอารูปของตัวเองมาลองด้วย
-
-**ทีหลัง**
-- [ ] เลือกโมเดลเจนรูป (แนะนำแบบที่รับรูปอ้างอิงได้ เช่น Gemini หรือ FLUX Kontext) แล้วต่อกับ bouquet.json
-- [x] เว็บ Bloom Craft (`เว็บ_Bloom_Craft/index.html`) อ่านผลจาก AI ได้แล้ว: หน้าแรกกด **Load AI result (bouquet.json)** → เลือก `results/bouquet_input/bouquet.json` → รายการดอก สไตล์ และภาชนะเติมให้เอง (เว็บตัวเดิมเก็บไว้ที่ `old_versions/เว็บ_ต้นฉบับ_เพื่อน/`)
-- [ ] ทำ API ให้เว็บส่งรูปมาวิเคราะห์ได้เองแทนการเลือกไฟล์ (ตอนนี้ต้องรันโน้ตบุ๊กก่อน)
-
----
-
-## 9. กับดักที่เคยเจอ (อ่านก่อนแก้โค้ด)
-
-| ปัญหา | สาเหตุ / ทางแก้ |
-|---|---|
-| SAM 3 โหลดไม่ได้ | เป็นโมเดลที่ต้องขอสิทธิ์ ต้องกด Request access แล้วล็อกอิน HF ก่อน |
-| SAM 3 ได้รูปทรงดอก (mask) ว่างเปล่า | fp16 ทำให้ mask เป็น NaN แก้แล้ว: ตัวใหญ่ใช้ fp16 ส่วนที่เหลือใช้ fp32 (อยู่ในเซลล์โหลดโมเดล) |
-| การ์ดจอ 4GB ใกล้เต็ม / แรมไม่พอ | ปิดโปรแกรมอื่น หรือใช้ Colab |
-| สคริปต์เทรน YOLO ค้างบน Windows | ต้องมี `if __name__ == "__main__":` |
-| Open Images รหัส `/m/0cdl1` | คือ **ต้นปาล์ม ไม่ใช่ทิวลิป** (เคยดึงรูปผิดมา) |
-| Roboflow API key / HF token | **ห้ามใส่ลงในไฟล์เด็ดขาด** ใช้ environment variable หรือ Colab Secrets เท่านั้น |
-| รูปใน `test_images/` | ห้ามเอาไปเทรน ไม่งั้นผลวัดจะดูดีเกินจริง |
+- SAM 3 – Meta AI · [facebook/sam3](https://huggingface.co/facebook/sam3)
+- BioCLIP 2 – Imageomics · [imageomics/bioclip-2](https://huggingface.co/imageomics/bioclip-2)
+- CLIP – OpenAI · [open_clip](https://github.com/mlfoundations/open_clip)
+- OWLv2 – Google · [google/owlv2-base-patch16-ensemble](https://huggingface.co/google/owlv2-base-patch16-ensemble)
+- YOLO11 – [Ultralytics](https://github.com/ultralytics/ultralytics)
+- RealVisXL V5.0 – [SG161222/RealVisXL_V5.0](https://huggingface.co/SG161222/RealVisXL_V5.0)
+- IP-Adapter – Ye et al. (2023) · [h94/IP-Adapter](https://huggingface.co/h94/IP-Adapter)
+- TF Flowers – [TensorFlow Datasets](https://www.tensorflow.org/datasets/catalog/tf_flowers)
+- Oxford 102 Flowers – Nilsback & Zisserman (2008) · [VGG Oxford](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/)
+- Bouquet / flower-count – [Roboflow Universe](https://universe.roboflow.com)

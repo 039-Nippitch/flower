@@ -6,6 +6,8 @@
 
 ![Architecture](results/architecture.png)
 
+🌐 **เว็บ Bloom Craft (ลองใช้จริง):** https://success-creating-number-stockings.trycloudflare.com/ — เปิดได้เฉพาะตอน Colab รันอยู่ ลิงก์เปลี่ยนทุกครั้งที่รันใหม่
+
 🎬 **วิดีโอทดลองใช้ระบบ:** [คลิปที่ 1](https://drive.google.com/file/d/1TkmOw-7vC7fQaKcrk0DXMwbGnM7F5bpb/view?usp=sharing) · [คลิปที่ 2](https://drive.google.com/drive/folders/1dJ1DBuRoGeG14hyJo1EJMyuAaPi-MMaj?usp=drive_link) (Google Drive)
 
 ---

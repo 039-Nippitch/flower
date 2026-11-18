@@ -6,6 +6,8 @@
 
 ![Architecture](results/architecture.png)
 
+🎬 **วิดีโอทดลองใช้ระบบ:** [ดูบน Google Drive](https://drive.google.com/file/d/1TkmOw-7vC7fQaKcrk0DXMwbGnM7F5bpb/view?usp=sharing)
+
 ---
 
 ## ▶️ วิธีรัน (Google Colab ฟรี 2 บัญชี)
